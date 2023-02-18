@@ -42,13 +42,53 @@ p:add({
 p:run()
 ```
 
-### Class Members
+## Class Members
 
 **Note**: Arguments and table field marked with `?` are optional.
 
-### `Patcher.getBaseAddr(filter)`
+#### `Patcher.getVersions()`
 
-Get the base address of a library.
+Get the current version of Patcher.
+
+**Parameters**
+
+- `return` (number) - The current numeric version of Patcher.
+- `return` (string) - The current version name of Patcher.
+
+Example:
+
+```lua
+local Patcher = require("Patcher")
+
+local version, name = Patcher.getVersions()
+print(version, name)
+```
+
+<br>
+
+#### `Patcher.require(version)`
+
+Check if the Patcher version is greater than or equal to the specified version.
+
+**Parameters**
+
+- `version` (number) - The version to check.
+
+Example:
+
+```lua
+local Patcher = require("Patcher")
+
+Patcher.require(210)
+```
+
+**Note**: This function will throw an error if the version is not supported.
+
+<br>
+
+#### `Patcher.getBaseAddr(filter)`
+
+Get the base address of a library in memory Xa - CodeApp
 
 **Parameters**
 
@@ -65,10 +105,11 @@ local libunity  = Patcher.getBaseAddr("libunity.so")
 local il2cpp    = Patcher.getBaseAddr("libil2cpp.so")
 ```
 
-<br>
+**Note**: This function will throw an error if the library is not found.
+
 <br>
 
-### `Patcher.new(config)`
+#### `Patcher.new(config)`
 
 Create a new Patcher instance.
 
@@ -93,9 +134,8 @@ local p = Patcher.new({
 ```
 
 <br>
-<br>
 
-### `Patcher:add(value)`
+#### `Patcher:add(value)`
 
 Add a new value to the patcher instance.
 
@@ -140,9 +180,8 @@ p:add({
 
 
 <br>
-<br>
 
-### `Patcher:run()`
+#### `Patcher:run()`
 
 Run the patcher instance.
 

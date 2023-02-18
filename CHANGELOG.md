@@ -1,13 +1,13 @@
 # Changelog
 
-## [2.1.0] - 2022-02-18
+## [2.1.0] - 2023-02-18
 
 ### Added
 - New feature showUiButton in config
 - Minor fixes and improvements in code
 
 
-## [2.0.0] - 2022-02-18
+## [2.0.0] - 2023-02-18
 
 Initial release
 

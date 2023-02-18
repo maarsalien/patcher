@@ -19,6 +19,10 @@ function Patcher.new(config)
   return self
 end
 
+function Patcher.getVersions()
+  return VERSION_CODE, VERSION_NAME
+end
+
 --- Get the base address of the executable memory.
 function Patcher.getBaseAddr(filter)
   if not filter then

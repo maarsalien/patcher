@@ -45,12 +45,33 @@ gg.setHex = function(address, hex, freeze)
     for i = 1, #values do
       values[i].freeze = true
     end
-
     gg.addListItems(values)
     return
   end
 
   gg.setValues(values)
+end
+
+--- Keep the script alive. (Main loop)
+gg.keepAlive = function(fn)
+  while true do
+    if gg.isVisible() then
+      gg.setVisible(false)
+      fn()
+    end
+    gg.sleep(100)
+  end
+end
+
+--- Keep the script alive with a UI button. (Main loop)
+gg.keepAliveUiButton = function(fn)
+  gg.showUiButton()
+  while true do
+    if gg.isClickedUiButton() then
+      fn()
+    end
+    gg.sleep(100)
+  end
 end
 
 return gg

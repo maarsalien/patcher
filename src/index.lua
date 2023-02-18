@@ -6,6 +6,11 @@ local util      = require "utils.util"
 local Patcher   = {}
 Patcher.__index = Patcher
 
+
+local VERSION_CODE = 210
+local VERSION_NAME = "2.1.0"
+
+
 --- Create a new Patcher instance.
 function Patcher.new(config)
   local self  = setmetatable({}, Patcher)
@@ -68,6 +73,7 @@ function Patcher:run()
 
     local value = self.values[ch]
 
+    -- TODO: Refactor this
     if value.processPause then
       gg.processPause()
     end

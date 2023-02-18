@@ -66,8 +66,6 @@ function Patcher:add(value)
 end
 
 function Patcher:run()
-  local debug
-
   if #self.values == 0 then
     gg.alert("No values to run")
     return

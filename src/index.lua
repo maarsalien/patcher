@@ -56,10 +56,6 @@ function Patcher:run()
   end
 
   local function main()
-    gg.sleep(100)
-
-    debug = false
-
     local menuItem = self.values:map(function(v)
       return util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
@@ -90,14 +86,10 @@ function Patcher:run()
     gg.toast(util.concat(value.state and self.config.on or self.config.off, " ", value.name))
   end
 
-  -- Main loop (Keeps the script running)
-  while true do
-    if gg.isVisible() then
-      debug = true
-      gg.setVisible(false)
-    end
-    if debug then main() end
+  if self.config.showUiButton then
+    gg.keepAliveUiButton(main)
   end
+  gg.keepAlive(main)
 end
 
 return Patcher

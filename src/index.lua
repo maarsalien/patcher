@@ -19,8 +19,17 @@ function Patcher.new(config)
   return self
 end
 
+--- Get the version of the Patcher.
 function Patcher.getVersions()
   return VERSION_CODE, VERSION_NAME
+end
+
+--- Check if the version of the Patcher is compatible with the script.
+function Patcher.require(version)
+  if version < VERSION_CODE then
+    util.error(string.format("The script requires Patcher version %s or higher but you provided %s", version,
+      VERSION_CODE))
+  end
 end
 
 --- Get the base address of the executable memory.

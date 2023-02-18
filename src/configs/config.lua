@@ -1,5 +1,7 @@
 local cfg = {}
 
+cfg.showUiButton = false
+
 cfg.VERSION_CODE = 2
 cfg.VERSION_NAME = "2.0.0"
 

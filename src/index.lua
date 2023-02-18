@@ -26,8 +26,13 @@ end
 
 --- Check if the version of the Patcher is compatible with the script.
 function Patcher.require(version)
-  if version < VERSION_CODE then
-    util.error(string.format("The script requires Patcher version %s or higher but you provided %s", version,
+  if not version then
+    util.error("No version was provided")
+  end
+
+  if version > VERSION_CODE then
+    util.error(string.format(
+      "The version of the Patcher is not compatible with the script. Script version: %s, Patcher version: %s", version,
       VERSION_CODE))
   end
 end

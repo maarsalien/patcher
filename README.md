@@ -78,6 +78,7 @@ Create a new Patcher instance.
   - `?title` (string) - The title to show in the menu.
   - `?on` (string) - The text to display when the patch is enabled.
   - `?off` (string) - The text to display when the patch is disabled.
+  - `?showUiButton` (boolean) - Show the UI button in the menu (default: false). *[see](https://gameguardian.net/help/classgg.html#add52a86cbf6695bb421cc86f4aa0e695)*
 
 - `return` (Patcher) - The Patcher instance.
 

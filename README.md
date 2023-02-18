@@ -40,14 +40,13 @@ p:add({
 })
 
 p:run()
-
 ```
 
-## Class Members
+### Class Members
 
 **Note**: Arguments and table field marked with `?` are optional.
 
-`Patcher.getBaseAddr(filter)`
+### `Patcher.getBaseAddr(filter)`
 
 Get the base address of a library.
 
@@ -69,7 +68,7 @@ local il2cpp    = Patcher.getBaseAddr("libil2cpp.so")
 <br>
 <br>
 
-`Patcher.new(config)`
+### `Patcher.new(config)`
 
 Create a new Patcher instance.
 
@@ -95,7 +94,7 @@ local p = Patcher.new({
 <br>
 <br>
 
-`Patcher:add(value)`
+### `Patcher:add(value)`
 
 Add a new value to the patcher instance.
 
@@ -142,7 +141,7 @@ p:add({
 <br>
 <br>
 
-`Patcher:run()`
+### `Patcher:run()`
 
 Run the patcher instance.
 

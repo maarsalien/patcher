@@ -5,7 +5,7 @@ Patcher is a gameguardian library for patching memory address, it provides a sim
 
 ## Installation
 
-Download the latest version of patcher from [here]() and add it to your project.
+Download the latest version of patcher from [here][release] and add it to your project.
 
 You can also load the latest version of Patcher from the [cdn][cdn] using the following code.
 
@@ -206,3 +206,4 @@ This project is not affiliated with [GameGuardian][gg] or any of its developers 
 <!-- links -->
 [gg]: https://gameguardian.net/
 [cdn]: https://pastebin.com/raw/wz1sfmWF
+[release]: https://github.com/maarsalien/patcher/releases

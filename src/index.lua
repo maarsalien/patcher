@@ -104,7 +104,6 @@ function Patcher:run()
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
-
     if ch == #menuItems - 1 then return util.actionMenu(self.values) end
     if ch == #menuItems then util.cleanExit() end
 

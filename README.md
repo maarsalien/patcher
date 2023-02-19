@@ -121,6 +121,12 @@ Create a new Patcher instance.
   - `?off` (string) - The text to display when the patch is disabled.
   - `?showUiButton` (boolean) - Show the UI button in the menu (default: false). *[see](https://gameguardian.net/help/classgg.html#add52a86cbf6695bb421cc86f4aa0e695)*
 
+  - `?menuBuilder(value, config)` (function) - A function to build the menu for the value (default: nil).
+    - `value` (table) - The value table. with all the fields from **Patcher:add(value)** method and **gg.getValues()** result. *[see](https://gameguardian.net/help/classgg.html#aae2b60904e15c3612a0d2d6385e0e3e3)*
+  
+    - `config` (table) - The configuration table with all the fields from **Patcher:new(config)** method.
+
+
 - `return` (Patcher) - The Patcher instance.
 
 Example:
@@ -149,6 +155,7 @@ Add a new value to the patcher instance.
   - `?freeze` (boolean) - Freeze the value (default: false)
   - `?state` (boolean) - The initial state of the value (default: false).
   - `?processPause` (boolean) - Pause the process before applying the patch and resume it after applying the patch (default: false). *[see](https://gameguardian.net/help/classgg.html#a14e502f895d2e989ebb31dc101f1b325)*
+  - `patchOnStart` (boolean) - Apply the patch when the script is started (default: false).
 
 
 

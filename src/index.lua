@@ -89,12 +89,13 @@ function Patcher:run()
           util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
 
-    -- table.insert(menuItems, 1, "Toggle All")
+    table.insert(menuItems, 1, "Toggle All")
     table.insert(menuItems, "Exit")
 
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
+    if ch == 1 then return self.values:forEach(function(v) gg.toggleValue(v) end) end
     if ch == #menuItems then util.cleanExit() end
 
     local value = self.values[ch]

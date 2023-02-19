@@ -7,9 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- New feature Toggle All Values in UI
-- New feature Enable All Values in UI
-- New feature Disable All Values in UI
+- New feature Toggle All Values 
+- New feature Enable All Values
+- New feature Restore All Values
 - New feature Patcher.patch to apply a patch without adding it to the patcher instance
 - New feature patchOnStart in value config to automatically apply the patch when Patcher:run() is called
 - Patcher config now accepts menuBuilder as function to build custom menu items in UI (see in example [here](EXAMPLE.md))

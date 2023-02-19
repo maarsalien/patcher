@@ -29,10 +29,8 @@ function Patcher.getHex(address, bitSize)
 end
 
 --- Patch a memory address with a hex string.
-function Patcher.patch(address, hex, freeze, processPause)
-  if processPause then gg.processPause() end
-  gg.setHex(address, hex:gsub(" ", ""), freeze)
-  if gg.isProcessPaused() then gg.processResume() end
+function Patcher.patchHex(address, hex, freeze, processPause)
+  gg.patchHex(address, hex, freeze, processPause)
 end
 
 --- Get the base address of the executable memory.
@@ -68,6 +66,7 @@ function Patcher:add(value)
   table.insert(self.values, value)
 end
 
+--- Run the patcher.
 function Patcher:run()
   if #self.values == 0 then
     gg.alert("No values to run")

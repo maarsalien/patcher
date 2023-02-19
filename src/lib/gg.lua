@@ -30,6 +30,8 @@ end
 
 --- Set the hex value of a memory address.
 gg.setHex = function(address, hex, freeze)
+  gg.sleep(100)
+
   local values = {}
 
   for i = 1, #hex - 1, 2 do

@@ -37,6 +37,10 @@ function Patcher.require(version)
   end
 end
 
+function Patcher.getHex(address, bitSize)
+  return gg.getHex(address, bitSize)
+end
+
 --- Patch a memory address with a hex string.
 function Patcher.patch(address, hex, freeze, processPause)
   if processPause then gg.processPause() end
@@ -74,7 +78,7 @@ function Patcher:add(value)
   value          = setmetatable(value, { __index = tValue })
   value.state    = value.state or false
   value.patch    = value.patch:gsub(" ", "")
-  value.original = gg.getHex(value.address, #value.patch:sub(1, -2)) .. gg.BIG_ENDIAN
+  value.original = gg.getHex(value.address, #value.patch:sub(1, -2) / 2) .. gg.BIG_ENDIAN
 
   table.insert(self.values, value)
 end
@@ -99,13 +103,11 @@ function Patcher:run()
     end)
 
     table.insert(menuItems, "Actions Menu")
-    table.insert(menuItems, "Exit Script")
 
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
-    if ch == #menuItems - 1 then return util.actionMenu(self.values) end
-    if ch == #menuItems then util.cleanExit() end
+    if ch == #menuItems then return util.actionMenu(self.values) end
 
     --- Toggle the selected value.
     local value = self.values[ch]

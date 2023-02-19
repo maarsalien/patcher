@@ -12,9 +12,11 @@ end
 
 
 --- Get the value of a memory address as a hex string.
-gg.getHex = function(address, bitSize, bigEndian)
+gg.getHex = function(address, bitSize)
   local value = gg.getValue(address, gg.TYPE_BYTE)
   if not value then return nil end
+
+  bitSize = bitSize or 8
 
   local hex = ""
   for i = 1, bitSize do
@@ -24,7 +26,7 @@ gg.getHex = function(address, bitSize, bigEndian)
     value = gg.getValue(value.address + 1, gg.TYPE_BYTE)
   end
 
-  return bigEndian and string.reverse(hex) or hex
+  return hex
 end
 
 

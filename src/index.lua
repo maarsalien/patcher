@@ -38,7 +38,7 @@ function Patcher.require(version)
 end
 
 function Patcher.getHex(address, bitSize)
-  return string.format("%s%s", gg.getHex(address, bitSize), gg.BIG_ENDIAN)
+  return gg.getHex(address, bitSize)
 end
 
 --- Patch a memory address with a hex string.

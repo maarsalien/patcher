@@ -6,7 +6,7 @@ util.actionMenu = function(values)
 
   local ch = gg.choice({
     "Toggle All",
-    "Enable All",
+    "Patch All",
     "Restore All",
     "Return to Main Menu"
   }, 0, "Actions Menu")
@@ -19,12 +19,12 @@ util.actionMenu = function(values)
 
   if ch == 2 then
     values:forEach(function(v) if not v.state then gg.toggleValue(v) end end)
-    return gg.toast("All values enabled")
+    return gg.toast("All values patched")
   end
 
   if ch == 3 then
     values:forEach(function(v) if v.state then gg.toggleValue(v) end end)
-    return gg.toast("All values disabled")
+    return gg.toast("All values restored")
   end
 end
 

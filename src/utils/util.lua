@@ -8,9 +8,11 @@ util.actionMenu = function(values)
     "Toggle All",
     "Patch All",
     "Restore All",
-    "Return to Main Menu"
+    "Return to Main Menu",
+    "Exit Script"
   }, 0, "Actions Menu")
-  if not ch or ch == 4 then return end
+  if not ch then return end
+
 
   if ch == 1 then
     values:forEach(function(v) gg.toggleValue(v) end)
@@ -25,6 +27,11 @@ util.actionMenu = function(values)
   if ch == 3 then
     values:forEach(function(v) if v.state then gg.toggleValue(v) end end)
     return gg.toast("All values restored")
+  end
+
+  if ch == 5 then
+    local r = gg.alert("Are you sure you want to exit?", "Yes", "No")
+    if r == 1 then util.cleanExit() end
   end
 end
 

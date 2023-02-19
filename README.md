@@ -240,6 +240,32 @@ Patcher.patch(il2cpp + 0x18643A8, "01 04 A0 E3 1E FF 2F E1r", true)
 Patcher.patch(il2cpp + 0x18643A8, "01 04 A0 E3 1E FF 2F E1r", false, true)
 ```
 
+<br>
+
+#### `Patcher.getHex(address, bitSize)`
+
+Get the hexadecimal value of the specified address. (the byte count is determined by the bitSize parameter)
+
+**Parameters**
+
+- `address` (number) - The address of the value.
+- `?bitSize` (number) - The bit size of the value (default: 8).
+
+**Note**: The bitSize parameter must be a multiple of 8.
+
+Example:
+
+```lua
+local Patcher = require("Patcher")
+
+local il2cpp = Patcher.getBaseAddr("libil2cpp.so")
+
+local hex   = Patcher.getHex(il2cpp + 0x18643A8)
+local hex2  = Patcher.getHex(il2cpp + 0x18643A8, 4)
+
+print(hex) -- 01 04 A0 E3 1E FF 2F E1
+print(hex2) -- 01 04 A0 E3
+```
 
 ## Contributing
 

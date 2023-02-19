@@ -1,5 +1,34 @@
 local util = {}
 
+--- Perform selected action on all values.
+util.actionMenu = function(values)
+  gg.setVisible(true)
+
+  local ch = gg.choice({
+    "Toggle All",
+    "Enable All",
+    "Restore All",
+    "Return to Main Menu"
+  }, 0, "Actions Menu")
+  if not ch or ch == 4 then return end
+
+  if ch == 1 then
+    values:forEach(function(v) gg.toggleValue(v) end)
+    return gg.toast("All values toggled")
+  end
+
+  if ch == 2 then
+    values:forEach(function(v) if not v.state then gg.toggleValue(v) end end)
+    return gg.toast("All values enabled")
+  end
+
+  if ch == 3 then
+    values:forEach(function(v) if v.state then gg.toggleValue(v) end end)
+    return gg.toast("All values disabled")
+  end
+end
+
+
 --- Alert the user and exit the script.
 util.error = function(msg)
   gg.alert(msg, "Exit")
@@ -32,5 +61,7 @@ util.cleanExit = function()
   gg.toast("Exiting...")
   os.exit()
 end
+
+
 
 return util

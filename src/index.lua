@@ -24,19 +24,6 @@ function Patcher.getVersions()
   return VERSION_CODE, VERSION_NAME
 end
 
---- Check if the version of the Patcher is compatible with the script.
-function Patcher.require(version)
-  if not version then
-    util.error("No version was provided")
-  end
-
-  if version > VERSION_CODE then
-    util.error(string.format(
-      "The version of the Patcher is not compatible with the script. Script version: %s, Patcher version: %s", version,
-      VERSION_CODE))
-  end
-end
-
 function Patcher.getHex(address, bitSize)
   return gg.getHex(address, bitSize)
 end

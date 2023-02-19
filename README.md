@@ -125,6 +125,7 @@ Create a new Patcher instance.
     - `value` (table) - The value table. with all the fields from **Patcher:add(value)** method and **gg.getValues()** result. *[see](https://gameguardian.net/help/classgg.html#aae2b60904e15c3612a0d2d6385e0e3e3)*
   
     - `config` (table) - The configuration table with all the fields from **Patcher:new(config)** method.
+    - `return` (string) - The menu string to display in the menu.
 
 
 - `return` (Patcher) - The Patcher instance.

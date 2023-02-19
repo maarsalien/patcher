@@ -37,6 +37,15 @@ function Patcher.require(version)
   end
 end
 
+--- Patch a memory address with a hex string.
+function Patcher.patch(address, hex, freeze, processPause)
+  if processPause then gg.processPause() end
+  if not address then util.error("No address was provided") end
+  if not hex then util.error("No hex was provided") end
+  gg.setHex(address, hex:gsub(" ", ""), freeze)
+  if gg.isProcessPaused() then gg.processResume() end
+end
+
 --- Get the base address of the executable memory.
 function Patcher.getBaseAddr(filter)
   if not filter then

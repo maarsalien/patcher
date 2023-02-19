@@ -37,6 +37,10 @@ function Patcher.require(version)
   end
 end
 
+function Patcher.getHex(address, bitSize)
+  return string.format("%s%s", gg.getHex(address, bitSize), gg.BIG_ENDIAN)
+end
+
 --- Patch a memory address with a hex string.
 function Patcher.patch(address, hex, freeze, processPause)
   if processPause then gg.processPause() end
@@ -74,7 +78,7 @@ function Patcher:add(value)
   value          = setmetatable(value, { __index = tValue })
   value.state    = value.state or false
   value.patch    = value.patch:gsub(" ", "")
-  value.original = gg.getHex(value.address, #value.patch:sub(1, -2)) .. gg.BIG_ENDIAN
+  value.original = gg.getHex(value.address, #value.patch:sub(1, -2) / 2) .. gg.BIG_ENDIAN
 
   table.insert(self.values, value)
 end

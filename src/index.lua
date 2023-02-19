@@ -98,33 +98,14 @@ function Patcher:run()
           util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
 
-    table.insert(menuItems, "Toggle All")
-    table.insert(menuItems, "Enable All")
-    table.insert(menuItems, "Disable All")
-    table.insert(menuItems, "Exit")
+    table.insert(menuItems, "Actions Menu")
+    table.insert(menuItems, "Exit Script")
 
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
 
-    -- Toggle all values
-    if ch == 1 then
-      self.values:forEach(function(v) gg.toggleValue(v) end)
-      return gg.toast("All values toggled")
-    end
-
-    --- Enable all values
-    if ch == 2 then
-      self.values:forEach(function(v) if not v.state then gg.toggleValue(v) end end)
-      return gg.toast("All values enabled")
-    end
-
-    --- Disable all values
-    if ch == 3 then
-      self.values:forEach(function(v) if v.state then gg.toggleValue(v) end end)
-      return gg.toast("All values disabled")
-    end
-
+    if ch == #menuItems - 1 then return util.actionMenu(self.values) end
     if ch == #menuItems then util.cleanExit() end
 
     --- Toggle the selected value.

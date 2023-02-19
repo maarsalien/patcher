@@ -30,6 +30,8 @@ end
 
 --- Set the hex value of a memory address.
 gg.setHex = function(address, hex, freeze)
+  gg.sleep(100)
+
   local values = {}
 
   for i = 1, #hex - 1, 2 do
@@ -72,6 +74,24 @@ gg.keepAliveUiButton = function(fn)
     end
     gg.sleep(100)
   end
+end
+
+gg.toggleValue = function(value)
+  if value.processPause then
+    gg.processPause()
+  end
+
+  if value.state then
+    gg.setHex(value.address, value.original, value.freeze)
+  else
+    gg.setHex(value.address, value.patch, value.freeze)
+  end
+
+  if gg.isProcessPaused() then
+    gg.processResume()
+  end
+
+  value.state = not value.state
 end
 
 return gg

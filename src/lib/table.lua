@@ -12,4 +12,11 @@ table.map = function(t, fn)
   return r
 end
 
+--- Run fn for each element of t
+table.forEach = function(t, fn)
+  for k, v in pairs(t) do
+    fn(v, k)
+  end
+end
+
 return table

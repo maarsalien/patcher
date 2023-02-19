@@ -37,6 +37,15 @@ function Patcher.require(version)
   end
 end
 
+--- Patch a memory address with a hex string.
+function Patcher.patch(address, hex, freeze, processPause)
+  if processPause then gg.processPause() end
+  if not address then util.error("No address was provided") end
+  if not hex then util.error("No hex was provided") end
+  gg.setHex(address, hex:gsub(" ", ""), freeze)
+  if gg.isProcessPaused() then gg.processResume() end
+end
+
 --- Get the base address of the executable memory.
 function Patcher.getBaseAddr(filter)
   if not filter then
@@ -76,41 +85,36 @@ function Patcher:run()
     return
   end
 
+  -- Patch all values on start if needed
+  self.values:forEach(function(v)
+    if v.patchOnStart then gg.toggleValue(v) end
+  end)
+
+  --- Main function for the patcher.
   local function main()
+    --- Build the menu items string.
     local menuItems = self.values:map(function(v)
-      return util.concat(v.state and self.config.on or self.config.off, " ", v.name)
+      return self.config.menuBuilder and self.config.menuBuilder(v, self.config) or
+          util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
-    menuItems[#menuItems + 1] = "Exit"
+
+    table.insert(menuItems, "Actions Menu")
+    table.insert(menuItems, "Exit Script")
 
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
+    if ch == #menuItems - 1 then return util.actionMenu(self.values) end
     if ch == #menuItems then util.cleanExit() end
 
+    --- Toggle the selected value.
     local value = self.values[ch]
-
-    -- TODO: Refactor this
-    if value.processPause then
-      gg.processPause()
-    end
-
-    if value.state then
-      gg.setHex(value.address, value.original, value.freeze)
-    else
-      gg.setHex(value.address, value.patch, value.freeze)
-    end
-
-    if gg.isProcessPaused() then
-      gg.processResume()
-    end
-
-    value.state = not value.state
+    gg.toggleValue(value)
     gg.toast(util.concat(value.state and self.config.on or self.config.off, " ", value.name))
   end
 
-  if self.config.showUiButton then
-    gg.keepAliveUiButton(main)
-  end
+  --- Keep script alive and show UI button if needed.
+  if self.config.showUiButton then gg.keepAliveUiButton(main) end
   gg.keepAlive(main)
 end
 

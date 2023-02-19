@@ -99,13 +99,11 @@ function Patcher:run()
     end)
 
     table.insert(menuItems, "Actions Menu")
-    table.insert(menuItems, "Exit Script")
 
     local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
-    if ch == #menuItems - 1 then return util.actionMenu(self.values) end
-    if ch == #menuItems then util.cleanExit() end
+    if ch == #menuItems then return util.actionMenu(self.values) end
 
     --- Toggle the selected value.
     local value = self.values[ch]

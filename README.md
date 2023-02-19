@@ -155,7 +155,7 @@ Add a new value to the patcher instance.
   - `?freeze` (boolean) - Freeze the value (default: false)
   - `?state` (boolean) - The initial state of the value (default: false).
   - `?processPause` (boolean) - Pause the process before applying the patch and resume it after applying the patch (default: false). *[see](https://gameguardian.net/help/classgg.html#a14e502f895d2e989ebb31dc101f1b325)*
-  - `patchOnStart` (boolean) - Apply the patch when the script is started (default: false).
+  - `?patchOnStart` (boolean) - Apply the patch when the script is started (default: false).
 
 
 
@@ -164,13 +164,15 @@ Example:
 ```lua
 local Patcher = require("Patcher")
 
+local il2cpp = Patcher.getBaseAddr("libil2cpp.so")
+
 local p = Patcher.new({
   title = "Custom Title",
 })
 
 p:add({
   name    = "Damage Multiplier",
-  address = 0x18643A8,
+  address = il2cpp + 0x18643A8,
   patch   = "01 04 A0 E3 1E FF 2F E1r",
 })
 ```
@@ -197,17 +199,44 @@ Example:
 ```lua
 local Patcher = require("Patcher")
 
+local il2cpp = Patcher.getBaseAddr("libil2cpp.so")
+
 local p = Patcher.new({
   title = "Custom Title",
 })
 
 p:add({
   name    = "Damage Multiplier",
-  address = 0x18643A8,
+  address = il2cpp + 0x18643A8,
   patch   = "01 04 A0 E3 1E FF 2F E1r",
 })
 
 p:run()
+```
+
+<br>
+
+#### `Patcher.patch(address, hex, freeze, processPause)`
+
+Apply a patch to the specified address and freeze the value if specified. (without adding the value to the patcher instance and wont keep track of the value)
+
+**Parameters**
+
+- `address` (number) - The address of the value.
+- `hex` (string) - The patch to apply to the value.
+- `?freeze` (boolean) - Freeze the value (default: false)
+- `?processPause` (boolean) - Pause the process before applying the patch and resume it after applying the patch (default: false). *[see](https://gameguardian.net/help/classgg.html#a14e502f895d2e989ebb31dc101f1b325)*
+
+Example:
+
+```lua
+local Patcher = require("Patcher")
+
+local il2cpp = Patcher.getBaseAddr("libil2cpp.so")
+
+Patcher.patch(il2cpp + 0x18643A8, "01 04 A0 E3 1E FF 2F E1r")
+Patcher.patch(il2cpp + 0x18643A8, "01 04 A0 E3 1E FF 2F E1r", true)
+Patcher.patch(il2cpp + 0x18643A8, "01 04 A0 E3 1E FF 2F E1r", false, true)
 ```
 
 

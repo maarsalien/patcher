@@ -1,3 +1,6 @@
+local util = require("utils.util")
+
+
 gg.BIG_ENDIAN    = "r"
 gg.LITTLE_ENDIAN = "h"
 
@@ -30,31 +33,8 @@ gg.getHex = function(address, bitSize)
 end
 
 
---- Set the hex value of a memory address.
-gg.setHex = function(address, hex, freeze)
-  gg.sleep(100)
 
-  local values = {}
 
-  for i = 1, #hex - 1, 2 do
-    table.insert(values, {
-      address = address,
-      flags   = gg.TYPE_BYTE,
-      value   = string.sub(hex, i, i + 1) .. hex:sub( -1)
-    })
-    address = address + 1
-  end
-
-  if freeze then
-    for i = 1, #values do
-      values[i].freeze = true
-    end
-    gg.addListItems(values)
-    return
-  end
-
-  gg.setValues(values)
-end
 
 --- Keep the script alive. (Main loop)
 gg.keepAlive = function(fn)
@@ -71,29 +51,45 @@ end
 gg.keepAliveUiButton = function(fn)
   gg.showUiButton()
   while true do
-    if gg.isClickedUiButton() then
-      fn()
-    end
+    if gg.isClickedUiButton() then fn() end
     gg.sleep(100)
   end
 end
 
 gg.toggleValue = function(value)
-  if value.processPause then
-    gg.processPause()
-  end
+  if value.processPause then gg.processPause() end
 
-  if value.state then
-    gg.setHex(value.address, value.original, value.freeze)
+  if util.isHex(value.patch:gsub("r", "")) then
+    local hex = value.state and value.original or value.patch
+    gg.patchHex(value.address, hex, value.freeze)
   else
-    gg.setHex(value.address, value.patch, value.freeze)
+    local opcode = value.state and value.original or value.patch
+    gg.setValues({ { address = value.address, flags = value.flags, value = opcode } })
   end
 
-  if gg.isProcessPaused() then
-    gg.processResume()
-  end
-
+  if gg.isProcessPaused() then gg.processResume() end
   value.state = not value.state
+end
+
+--- Set the hex value of a memory address.
+gg.patchHex = function(address, hex, freeze, processPause)
+  gg.sleep(100)
+
+  local values = {}
+
+  for i = 1, #hex - 1, 2 do
+    table.insert(values, {
+      address = address,
+      flags   = gg.TYPE_BYTE,
+      freeze  = freeze,
+      value   = string.sub(hex, i, i + 1) .. hex:sub( -1)
+    })
+    address = address + 1
+  end
+
+  if processPause then gg.processPause() end
+  if freeze then gg.addListItems(values) else gg.setValues(values) end
+  if gg.isProcessPaused() then gg.processResume() end
 end
 
 return gg

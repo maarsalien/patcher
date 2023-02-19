@@ -77,15 +77,15 @@ function Patcher:run()
   end
 
   local function main()
-    local menuItem = self.values:map(function(v)
+    local menuItems = self.values:map(function(v)
       return util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
-    menuItem[#menuItem + 1] = "Exit"
+    menuItems[#menuItems + 1] = "Exit"
 
-    local ch = gg.choice(menuItem, 0, self.config.title)
+    local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
-    if ch == #menuItem then util.cleanExit() end
+    if ch == #menuItems then util.cleanExit() end
 
     local value = self.values[ch]
 

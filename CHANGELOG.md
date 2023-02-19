@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2023-02-19
+
+### Added
+
+- New feature Toggle All Values in UI
+- New feature Enable All Values in UI
+- New feature Disable All Values in UI
+- New feature Patcher.patch to apply a patch without adding it to the patcher instance
+- New feature patchOnStart in value config to automatically apply the patch when Patcher:run() is called
+- Patcher config now accepts menuBuilder as function to build custom menu items in UI (see in example [here](EXAMPLE.md))
+
 ## [2.2.0] - 2023-02-19
 
 ### Added

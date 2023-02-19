@@ -74,4 +74,22 @@ gg.keepAliveUiButton = function(fn)
   end
 end
 
+gg.toggleValue = function(value)
+  if value.processPause then
+    gg.processPause()
+  end
+
+  if value.state then
+    gg.setHex(value.address, value.original, value.freeze)
+  else
+    gg.setHex(value.address, value.patch, value.freeze)
+  end
+
+  if gg.isProcessPaused() then
+    gg.processResume()
+  end
+
+  value.state = not value.state
+end
+
 return gg

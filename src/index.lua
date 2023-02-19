@@ -98,9 +98,9 @@ function Patcher:run()
           util.concat(v.state and self.config.on or self.config.off, " ", v.name)
     end)
 
-    table.insert(menuItems, 1, "Toggle All")
-    table.insert(menuItems, 2, "Enable All")
-    table.insert(menuItems, 3, "Disable All")
+    table.insert(menuItems, "Toggle All")
+    table.insert(menuItems, "Enable All")
+    table.insert(menuItems, "Disable All")
     table.insert(menuItems, "Exit")
 
     local ch = gg.choice(menuItems, 0, self.config.title)

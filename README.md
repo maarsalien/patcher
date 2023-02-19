@@ -44,6 +44,8 @@ p:run()
 
 ## Class Members
 
+**Note**: See more in depth examples [here](EXAMPLE.md)
+
 **Note**: Arguments and table field marked with `?` are optional.
 
 #### `Patcher.getVersions()`

@@ -76,41 +76,34 @@ function Patcher:run()
     return
   end
 
-  local function main()
-    local menuItem = self.values:map(function(v)
-      return util.concat(v.state and self.config.on or self.config.off, " ", v.name)
-    end)
-    menuItem[#menuItem + 1] = "Exit"
+  -- Patch all values on start if needed
+  self.values:forEach(function(v)
+    if v.patchOnStart then gg.toggleValue(v) end
+  end)
 
-    local ch = gg.choice(menuItem, 0, self.config.title)
+  --- Main function for the patcher.
+  local function main()
+    --- Build the menu items string.
+    local menuItems = self.values:map(function(v)
+      return self.config.menuBuilder and self.config.menuBuilder(v, self.config) or
+          util.concat(v.state and self.config.on or self.config.off, " ", v.name)
+    end)
+
+    -- table.insert(menuItems, 1, "Toggle All")
+    table.insert(menuItems, "Exit")
+
+    local ch = gg.choice(menuItems, 0, self.config.title)
 
     if not ch then return end
-    if ch == #menuItem then util.cleanExit() end
+    if ch == #menuItems then util.cleanExit() end
 
     local value = self.values[ch]
-
-    -- TODO: Refactor this
-    if value.processPause then
-      gg.processPause()
-    end
-
-    if value.state then
-      gg.setHex(value.address, value.original, value.freeze)
-    else
-      gg.setHex(value.address, value.patch, value.freeze)
-    end
-
-    if gg.isProcessPaused() then
-      gg.processResume()
-    end
-
-    value.state = not value.state
+    gg.toggleValue(value)
     gg.toast(util.concat(value.state and self.config.on or self.config.off, " ", value.name))
   end
 
-  if self.config.showUiButton then
-    gg.keepAliveUiButton(main)
-  end
+  --- Keep script alive and show UI button if needed.
+  if self.config.showUiButton then gg.keepAliveUiButton(main) end
   gg.keepAlive(main)
 end
 

@@ -16,6 +16,8 @@ gg.getHex = function(address, bitSize)
   local value = gg.getValue(address, gg.TYPE_BYTE)
   if not value then return nil end
 
+  bitSize = bitSize or 8
+
   local hex = ""
   for i = 1, bitSize do
     local v = value.value % 256
